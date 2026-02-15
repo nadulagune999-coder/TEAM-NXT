@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NXT | NEXT TIME - Sri Lankan Free Fire Guild</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+        :root {
+            --gold-primary: #FFD700;
+            --gold-dark: #B8860B;
+            --gold-light: #FFE55C;
+            --fire-orange: #FF6B35;
+            --fire-red: #FF4500;
+            --dark-bg: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor with Fire Glow */
+        .cursor-glow {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            box-shadow: 0 0 20px var(--gold-primary), 0 0 40px var(--fire-orange), 0 0 60px var(--fire-red);
+            mix-blend-mode: screen;
+        }
+
+        .cursor-trail {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.2s;
+        }
+
+        /* Gold Gradient Text */
+        .gold-text {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .gold-text-animated {
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B35, #FFD700);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShine 3s linear infinite;
+        }
+
+        @keyframes goldShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Metallic Gold Effect */
+        .metallic-gold {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+
+        /* Fire Animation */
+        .fire-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .fire-flame {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 60px;
+            background: linear-gradient(to top, transparent, #FF4500, #FF6B35, #FFD700);
+            filter: blur(8px);
+            opacity: 0.8;
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            border-radius: 50% 50% 20% 20%;
+            z-index: -1;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1) scaleX(1); opacity: 0.8; }
+            100% { transform: translateX(-50%) scaleY(1.2) scaleX(1.1); opacity: 1; }
+        }
+
+        /* Fire Particles Background */
+        .fire-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #FFD700, #FF6B35, transparent);
+            border-radius: 50%;
+            animation: rise 4s infinite ease-in;
+            opacity: 0;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Gold Border Animation */
+        .gold-border {
+            position: relative;
+            border: 2px solid transparent;
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+                        linear-gradient(90deg, #FFD700, #FFA500, #FFD700) border-box;
+            background-size: 300% 100%;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Skeleton Loading Shimmer */
+        .skeleton {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glow Effects */
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.1);
+        }
+
+        .glow-fire {
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.4), 0 0 60px rgba(255, 69, 0, 0.2);
+        }
+
+        /* Button Hover Effects */
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        /* Card Fire Edge */
+        .fire-card {
+            position: relative;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .fire-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #FFD700, #FF6B35, #FFD700, #FF4500);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            filter: blur(8px);
+        }
+
+        .fire-card:hover::before {
+            opacity: 1;
+            animation: rotateBorder 3s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { filter: blur(8px) hue-rotate(0deg); }
+            100% { filter: blur(8px) hue-rotate(360deg); }
+        }
+
+        .fire-card:hover {
+            transform: translateY(-5px);
+            border-color: transparent;
+        }
+
+        /* Navigation */
+        .nav-glass {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Page Transition */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Visitor Counter */
+        .counter-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 53, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* WhatsApp Button Pulse */
+        .whatsapp-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Free Fire Logo Style */
+        .ff-logo {
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            transition: transform 0.3s;
+        }
+
+        .ff-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #FFD700, #FF6B35);
+            border-radius: 5px;
+        }
+
+        /* Image Placeholder Styles */
+        .img-placeholder {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 215, 0, 0.5);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .img-placeholder:hover {
+            border-color: rgba(255, 215, 0, 0.8);
+            color: rgba(255, 215, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="fire-container mb-4">
+            <h1 class="loader-text metallic-gold">NXT</h1>
+            <div class="fire-flame"></div>
+        </div>
+        <div class="skeleton w-48 h-2 mt-4 rounded-full"></div>
+        <p class="text-yellow-500 mt-4 font-bold tracking-widest">LOADING...</p>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-glow hidden md:block"></div>
+    <div class="cursor-trail hidden md:block"></div>
+
+    <!-- Fire Particles Background -->
+    <div class="fire-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-glass fixed w-full z-50 top-0">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo Area -->
+                <div class="flex items-center space-x-4">
+                    <!-- Free Fire Logo Placeholder -->
+                    <div class="w-12 h-12 img-placeholder rounded-lg ff-logo" title="Add Free Fire Logo Here">
+                        <i class="fas fa-gamepad text-2xl"></i>
+                    </div>
+                    <div class="hidden md:block">
+                        <h2 class="text-2xl font-bold gold-text-animated font-['Orbitron']">NXT</h2>
+                        <p class="text-xs text-yellow-600 tracking-wider">NEXT TIME</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="showPage('home')" class="nav-link text-gray-300 hover:text-yellow-400 transition-colors font-semibold tracking-wide uppercase text-sm">
+                        Home
+                    </button>
+                    <button onclick="showPage('join')" class="nav-link text-gray-300 hover:text-yellow-400 transition-colors font-semibold tracking-wide uppercase text-sm">
+                        Join / About
+                    </button>
+                    <button onclick="showPage('contact')" class="nav-link text-gray-300 hover:text-yellow-400 transition-colors font-semibold tracking-wide uppercase text-sm">
+                        Contact
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-yellow-500 text-2xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-black border-l border-yellow-500/30 md:hidden z-50" id="mobileMenu">
+            <div class="p-6">
+                <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 text-yellow-500 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="mt-12 space-y-6">
+                    <button onclick="showPage('home'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-yellow-400 font-semibold uppercase">Home</button>
+                    <button onclick="showPage('join'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-yellow-400 font-semibold uppercase">Join / About</button>
+                    <button onclick="showPage('contact'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-yellow-400 font-semibold uppercase">Contact</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-20">
+        
+        <!-- HOME PAGE -->
+        <section id="home" class="page-section active min-h-screen">
+            <!-- Hero Section -->
+            <div class="container mx-auto px-6 py-20 text-center">
+                <div class="reveal">
+                    <div class="fire-container inline-block mb-8">
+                        <h1 class="text-6xl md:text-9xl font-black metallic-gold font-['Orbitron'] tracking-tighter">
+                            NXT
+                        </h1>
+                        <div class="fire-flame" style="height: 80px; filter: blur(15px);"></div>
+                        <div class="fire-flame" style="height: 60px; filter: blur(10px); animation-delay: 0.2s;"></div>
+                    </div>
+                    
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-4 tracking-widest">
+                        MACHUN <span class="gold-text-animated">NEXT TIME</span>
+                    </h2>
+                    
+                    <p class="text-yellow-600 text-lg md:text-xl font-semibold tracking-wider mb-8">
+                        Proudly Based in Sri Lanka – SG Region
+                    </p>
+
+                    <!-- Gold Animated Border Line -->
+                    <div class="w-full max-w-2xl mx-auto h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-12 gold-border"></div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 reveal">
+                    <div class="counter-box rounded-2xl p-6 glow-gold">
+                        <div class="text-4xl font-bold gold-text-animated mb-2" id="memberCount">50</div>
+                        <div class="text-gray-400 uppercase tracking-wider text-sm">Active Members</div>
+                    </div>
+                    
+                    <div class="counter-box rounded-2xl p-6 glow-gold">
+                        <div class="text-4xl font-bold gold-text-animated mb-2" id="visitorCount">0</div>
+                        <div class="text-gray-400 uppercase tracking-wider text-sm">Live Visitors</div>
+                    </div>
+
+                    <div class="counter-box rounded-2xl p-6 glow-gold">
+                        <div class="text-4xl font-bold gold-text-animated mb-2">SG</div>
+                        <div class="text-gray-400 uppercase tracking-wider text-sm">Server Region</div>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="reveal">
+                    <button onclick="showPage('join')" class="btn-gold px-12 py-4 rounded-full text-lg font-bold tracking-wider">
+                        Join The Guild <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Feature Cards -->
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-20">
+                    <!-- Card 1 -->
+                    <div class="fire-card rounded-2xl p-8 reveal">
+                        <div class="w-16 h-16 img-placeholder rounded-full mx-auto mb-4" title="Add Tournament Image">
+                            <i class="fas fa-trophy text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold gold-text mb-2">Tournaments</h3>
+                        <p class="text-gray-400">Regular competitive events and scrims for all skill levels</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="fire-card rounded-2xl p-8 reveal">
+                        <div class="w-16 h-16 img-placeholder rounded-full mx-auto mb-4" title="Add Team Image">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold gold-text mb-2">Elite Squad</h3>
+                        <p class="text-gray-400">Professional team representing Sri Lanka in international arenas</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="fire-card rounded-2xl p-8 reveal">
+                        <div class="w-16 h-16 img-placeholder rounded-full mx-auto mb-4" title="Add Community Image">
+                            <i class="fas fa-fire text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold gold-text mb-2">Community</h3>
+                        <p class="text-gray-400">Active Discord and in-game community with 50+ members</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN / ABOUT PAGE -->
+        <section id="join" class="page-section min-h-screen">
+            <div class="container mx-auto px-6 py-20">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl md:text-6xl font-black metallic-gold font-['Orbitron'] mb-4">JOIN NXT</h2>
+                    <div class="w-32 h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto"></div>
+                    <p class="text-gray-400 mt-4 text-lg">Become part of Sri Lanka's elite Free Fire guild</p>
+                </div>
+
+                <!-- Requirements Cards -->
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+                    <div class="fire-card rounded-2xl p-8 reveal">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-black text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold gold-text">Requirements</h3>
+                        </div>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i> Level 50+ Account</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i> Active Daily Player</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i> Discord Mandatory</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i> Team Player Mentality</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i> Sri Lankan Resident</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-card rounded-2xl p-8 reveal">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center mr-4">
+                                <i class="fas fa-gift text-black text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold gold-text">Benefits</h3>
+                        </div>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex items-center"><i class="fas fa-fire text-orange-500 mr-3"></i> Tournament Access</li>
+                            <li class="flex items-center"><i class="fas fa-fire text-orange-500 mr-3"></i> Coaching & Training</li>
+                            <li class="flex items-center"><i class="fas fa-fire text-orange-500 mr-3"></i> Exclusive Events</li>
+                            <li class="flex items-center"><i class="fas fa-fire text-orange-500 mr-3"></i> Prize Pool Sharing</li>
+                            <li class="flex items-center"><i class="fas fa-fire text-orange-500 mr-3"></i> Brotherhood Forever</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div class="max-w-4xl mx-auto text-center mb-16 reveal">
+                    <div class="fire-card rounded-2xl p-10 glow-fire">
+                        <h3 class="text-3xl font-bold gold-text-animated mb-6">About NEXT TIME</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Founded in Sri Lanka, NXT (NEXT TIME) has grown from a small group of friends to one of the most recognized Free Fire guilds in the SG region. We pride ourselves on skill, strategy, and sportsmanship.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            With 50 active members and counting, we continue to dominate tournaments and create a legacy that represents the best of Sri Lankan esports.
+                        </p>
+                        
+                        <!-- Guild Image Placeholder -->
+                        <div class="mt-8 w-full h-64 img-placeholder rounded-xl" title="Add Guild Banner/Team Photo Here">
+                            <div class="text-center">
+                                <i class="fas fa-image text-4xl mb-2"></i>
+                                <p>Guild Banner Image Placeholder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Big Join Button -->
+                <div class="text-center reveal">
+                    <button onclick="showPage('contact')" class="btn-gold px-16 py-6 rounded-full text-2xl font-black tracking-wider glow-fire transform hover:scale-105 transition-transform">
+                        <i class="fas fa-fire-alt mr-3"></i> JOIN NOW <i class="fas fa-fire-alt ml-3"></i>
+                    </button>
+                    <p class="text-yellow-600 mt-4 text-sm tracking-widest">CLICK TO CONTACT VIA WHATSAPP</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT PAGE -->
+        <section id="contact" class="page-section min-h-screen">
+            <div class="container mx-auto px-6 py-20">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl md:text-6xl font-black metallic-gold font-['Orbitron'] mb-4">CONTACT US</h2>
+                    <div class="w-32 h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto mb-4"></div>
+                    <p class="text-green-500 text-lg font-semibold"><i class="fab fa-whatsapp mr-2"></i> WhatsApp Only</p>
+                </div>
+
+                <!-- Contact Cards -->
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Guild Leader -->
+                    <a href="https://wa.me/94715208245" target="_blank" class="fire-card rounded-2xl p-8 text-center reveal group block hover:no-underline">
+                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6 whatsapp-pulse group-hover:scale-110 transition-transform">
+                            <i class="fab fa-whatsapp text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">GUILD LEADER</h3>
+                        <p class="text-green-400 font-mono text-lg mb-2">+94 71 520 8245</p>
+                        <div class="w-full h-12 bg-green-600/20 rounded-lg flex items-center justify-center text-green-400 font-semibold group-hover:bg-green-600 group-hover:text-white transition-all">
+                            <i class="fas fa-comment-dots mr-2"></i> Message Now
+                        </div>
+                    </a>
+
+                    <!-- Guild Officer -->
+                    <a href="https://wa.me/94775925093" target="_blank" class="fire-card rounded-2xl p-8 text-center reveal group block hover:no-underline">
+                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6 whatsapp-pulse group-hover:scale-110 transition-transform" style="animation-delay: 0.5s;">
+                            <i class="fab fa-whatsapp text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">GUILD OFFICER</h3>
+                        <p class="text-green-400 font-mono text-lg mb-2">+94 77 592 5093</p>
+                        <div class="w-full h-12 bg-green-600/20 rounded-lg flex items-center justify-center text-green-400 font-semibold group-hover:bg-green-600 group-hover:text-white transition-all">
+                            <i class="fas fa-comment-dots mr-2"></i> Message Now
+                        </div>
+                    </a>
+
+                    <!-- Contact Officer -->
+                    <a href="https://wa.me/94766490119" target="_blank" class="fire-card rounded-2xl p-8 text-center reveal group block hover:no-underline">
+                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6 whatsapp-pulse group-hover:scale-110 transition-transform" style="animation-delay: 1s;">
+                            <i class="fab fa-whatsapp text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">CONTACT OFFICER</h3>
+                        <p class="text-green-400 font-mono text-lg mb-2">076 649 0119</p>
+                        <div class="w-full h-12 bg-green-600/20 rounded-lg flex items-center justify-center text-green-400 font-semibold group-hover:bg-green-600 group-hover:text-white transition-all">
+                            <i class="fas fa-comment-dots mr-2"></i> Message Now
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Quick Info -->
+                <div class="max-w-2xl mx-auto mt-16 reveal">
+                    <div class="fire-card rounded-2xl p-8 text-center">
+                        <i class="fas fa-clock text-yellow-500 text-3xl mb-4"></i>
+                        <h3 class="text-xl font-bold gold-text mb-2">Response Time</h3>
+                        <p class="text-gray-400">We typically respond within 24 hours. For urgent tournament matters, contact the Guild Leader directly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-yellow-500/30 bg-black/80 backdrop-blur-md mt-20">
+        <div class="container mx-auto px-6 py-12">
+            <!-- Gold Divider -->
+            <div class="w-full h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-8"></div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h3 class="text-3xl font-black metallic-gold font-['Orbitron']">NEXT TIME</h3>
+                    <p class="text-yellow-600 text-sm tracking-wider mt-1">Proudly Based in Sri Lanka – SG Region</p>
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <!-- Social Placeholders -->
+                    <div class="w-10 h-10 img-placeholder rounded-full" title="Add Discord Link">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <div class="w-10 h-10 img-placeholder rounded-full" title="Add YouTube Link">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="w-10 h-10 img-placeholder rounded-full" title="Add Instagram Link">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 pt-8 border-t border-yellow-500/10">
+                <p class="text-gray-500 text-sm">Dev by <span class="text-yellow-500 font-bold">NXT NOAX</span></p>
+                <p class="text-gray-600 text-xs mt-2">&copy; 2026 NXT Guild. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Elements (Muted by Default) -->
+    <!-- Uncomment and add audio files to enable sound effects -->
+    <!--
+    <audio id="hoverSound" preload="auto" muted>
+        <source src="hover.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound" preload="auto" muted>
+        <source src="click.mp3" type="audio/mpeg">
+    </audio>
+    -->
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Re-trigger reveal animations
+            setTimeout(() => {
+                revealOnScroll();
+            }, 100);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+
+        // Fire Particles Generation
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Custom Cursor
+        function initCursor() {
+            const cursor = document.querySelector('.cursor-glow');
+            const trail = document.querySelector('.cursor-trail');
+            
+            if (window.matchMedia('(pointer: coarse)').matches) return; // Disable on touch
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+                
+                setTimeout(() => {
+                    trail.style.left = e.clientX - 20 + 'px';
+                    trail.style.top = e.clientY - 20 + 'px';
+                }, 100);
+            });
+            
+            // Hover effects
+            document.querySelectorAll('button, a, .fire-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.borderColor = '#FF6B35';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.borderColor = '#FFD700';
+                });
+            });
+        }
+
+        // Visitor Counter (Simulated Live Counter)
+        function initVisitorCounter() {
+            const counter = document.getElementById('visitorCount');
+            let count = parseInt(localStorage.getItem('visitorCount')) || 1247;
+            
+            // Simulate live changes
+            setInterval(() => {
+                const change = Math.random() > 0.5 ? 1 : -1;
+                if (Math.random() > 0.7) {
+                    count += change;
+                    localStorage.setItem('visitorCount', count);
+                    counter.textContent = count;
+                }
+            }, 3000);
+            
+            counter.textContent = count;
+        }
+
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Member Counter Animation
+        function animateMemberCount() {
+            const counter = document.getElementById('memberCount');
+            const target = 50;
+            let current = 0;
+            const increment = target / 50;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, 30);
+        }
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            initCursor();
+            initVisitorCounter();
+            animateMemberCount();
+            
+            // Scroll event listener
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Initial check
+        });
+
+        // Sound Effect Structure (Ready to implement)
+        /*
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound && !sound.muted) {
+                sound.currentTime = 0;
+                sound.play();
+            }
+        }
+        
+        // Add to buttons:
+        // onmouseenter="playSound('hoverSound')" 
+        // onclick="playSound('clickSound')"
+        */
+    </script>
+</body>
+</html>
